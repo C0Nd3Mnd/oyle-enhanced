@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && node postbuild.js",
+    "build": "vue-tsc --noEmit && vite build --sourcemap && node postbuild.js",
     "autobuild": "nodemon -w src -w public -w package.json -w postbuild.js -e js,ts,json,html,vue,css -x \"npm run build\"",
     "preview": "vite preview"
   },
   "dependencies": {
     "@mdi/js": "^7.0.96",
+    "pinia": "^2.0.22",
     "vue": "^3.2.37",
     "vuetify": "^3.0.0-beta.11"
   },

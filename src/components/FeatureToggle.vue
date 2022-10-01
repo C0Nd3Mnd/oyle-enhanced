@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import { defineProps, onMounted, ref } from "vue";
+import { useAddonStore } from "../stores/addon";
 
-const value = ref(false);
-
-onMounted(() => {
-  chrome.storage.sync.get((items) => {
-    value.value = items[props.prop];
-  });
-});
+const addonStore = useAddonStore();
 
 const props = defineProps({
   prop: {
@@ -15,19 +10,13 @@ const props = defineProps({
     required: true,
   },
 });
-
-function toggleProp(prop: string) {
-  value.value = !value.value;
-
-  chrome.storage.sync.set({ [props.prop]: value.value });
-}
 </script>
 
 <template>
-  <v-list-item v-bind="$props" @click="toggleProp(props.prop)">
+  <v-list-item v-bind="$props" @click="addonStore.toggleItem(props.prop)">
     <template #prepend>
       <v-list-item-action start>
-        <v-checkbox-btn :model-value="value" />
+        <v-checkbox-btn :model-value="addonStore.storage[props.prop]" />
       </v-list-item-action>
     </template>
   </v-list-item>

@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { version } from "../package.json";
 import { mdiOwl, mdiCat, mdiBird, mdiGithub } from "@mdi/js";
 import FeatureToggle from "./components/FeatureToggle.vue";
+import { useAddonStore } from "./stores/addon";
 
 const postImageHeightLimitOptions = [
   {
@@ -50,25 +51,6 @@ const limitPageWidthOptions = [
   },
 ];
 
-const storage = ref<{ [key: string]: any }>({});
-
-chrome.storage.sync.get((items) => {
-  storage.value = items;
-});
-
-function toggleProp(prop: string) {
-  console.log("PROP UPDATE", prop);
-  storage.value[prop] = !storage.value[prop];
-
-  chrome.storage.sync.set({ [prop]: storage.value[prop] });
-}
-
-function setPropString(prop: string, value: string) {
-  storage.value[prop] = value;
-
-  chrome.storage.sync.set({ [prop]: storage.value[prop] });
-}
-
 async function reload() {
   const tabs = await chrome.tabs.query({
     url: "*://*.oyle-community.de/*",
@@ -98,6 +80,8 @@ function easterEgg() {
       break;
   }
 }
+
+const addonStore = useAddonStore();
 </script>
 
 <template>
@@ -114,8 +98,8 @@ function easterEgg() {
           <v-select
             :items="limitPageWidthOptions"
             label="Maximale Breite der Seite"
-            :model-value="storage.limitPageWidth"
-            @update:modelValue="setPropString('limitPageWidth', $event)"
+            :model-value="addonStore.storage.limitPageWidth"
+            @update:modelValue="addonStore.setItem('limitPageWidth', $event)"
           />
         </v-list-item>
         <v-list-subheader>Posts</v-list-subheader>
@@ -123,8 +107,10 @@ function easterEgg() {
           <v-select
             :items="postImageHeightLimitOptions"
             label="Maximale Höhe von Bildern"
-            :model-value="storage.postImageHeightLimit"
-            @update:modelValue="setPropString('postImageHeightLimit', $event)"
+            :model-value="addonStore.storage.postImageHeightLimit"
+            @update:modelValue="
+              addonStore.setItem('postImageHeightLimit', $event)
+            "
           />
         </v-list-item>
         <FeatureToggle

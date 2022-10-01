@@ -48,7 +48,15 @@ div.p-footer-inner {
     css += `
 /* Hide forum news banner */
 #top > div.p-body > div > div.p-body-main > div.p-body-content > div > div.block.porta-features.porta-features-fix {
-    display: none;
+  display: none;
+}`;
+  }
+
+  if (storage.hideSignatureImages) {
+    css += `
+/* Hide signature images */
+.message-signature img {
+  display: none;
 }`;
   }
 
@@ -63,6 +71,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     replaceLogo: "",
     limitPageWidth: 0,
     hideForumNewsBanner: false,
+    hideSignatureImages: false,
   };
 
   chrome.storage.sync.set({

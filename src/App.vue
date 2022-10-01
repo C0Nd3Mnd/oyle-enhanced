@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { version } from "../package.json";
-import { mdiOwl, mdiCat, mdiBird } from "@mdi/js";
+import { mdiOwl, mdiCat, mdiBird, mdiGithub } from "@mdi/js";
 
 const postImageHeightLimitOptions = [
   {
@@ -104,7 +104,7 @@ function easterEgg() {
     <v-app-bar color="primary" density="compact">
       <v-app-bar-nav-icon :icon="easterEggIcon" @click="easterEgg" />
       <v-app-bar-title>Oyle Enhanced</v-app-bar-title>
-      <v-spacer />
+      <v-btn @click="reload">Neu laden</v-btn>
     </v-app-bar>
     <v-main>
       <v-list lines="two" select-strategy="independent" density="compact">
@@ -125,6 +125,17 @@ function easterEgg() {
             :model-value="storage.postImageHeightLimit"
             @update:modelValue="setPropString('postImageHeightLimit', $event)"
           />
+        </v-list-item>
+        <v-list-item @click="toggleProp('hideSignatureImages')">
+          <template #prepend>
+            <v-list-item-action start>
+              <v-checkbox-btn :model-value="storage.hideSignatureImages" />
+            </v-list-item-action>
+          </template>
+          <v-list-item-title>Signaturbilder ausblenden</v-list-item-title>
+          <v-list-item-subtitle>
+            Blendet sämtliche Bilder in Signaturen von Posts aus.
+          </v-list-item-subtitle>
         </v-list-item>
         <v-list-subheader>Navigation</v-list-subheader>
         <v-list-item @click="toggleProp('fixedNavigationIcons')">
@@ -152,22 +163,26 @@ function easterEgg() {
           </v-list-item-subtitle>
         </v-list-item>
       </v-list>
-      <v-container fluid>
-        <v-row>
-          <v-col align="right">
-            <v-btn color="primary" @click="reload">Neu laden</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-      <v-footer class="pa-0">
-        <div class="px-4 py-2 bg-secondary text-center w-100">
-          Version {{ version }}, erstellt von
+      <v-footer app class="pa-0">
+        <div class="px-4 py-2 bg-secondary w-100 d-flex">
+          <span>
+            Version {{ version }}, erstellt von
+            <a
+              href="https://oyle-community.de/index.php?members/sleeping_bird.8/"
+              target="_blank"
+              class="text-accent"
+            >
+              Sleeping_bird
+            </a>
+          </span>
+          <v-spacer />
           <a
-            href="https://oyle-community.de/index.php?members/sleeping_bird.8/"
+            href="https://github.com/C0Nd3Mnd/oyle-enhanced"
+            title="GitHub"
             target="_blank"
-            class="text-accent"
+            class="text-white"
           >
-            Sleeping_bird
+            <v-icon>{{ mdiGithub }}</v-icon>
           </a>
         </div>
       </v-footer>

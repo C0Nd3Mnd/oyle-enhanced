@@ -2,14 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useAddonStore = defineStore("addon", () => {
-  const storage = ref<{ [key: string]: any }>({
-    fixedNavigationIcons: false,
-    postImageHeightLimit: 0,
-    replaceLogo: "",
-    limitPageWidth: 0,
-    hideForumNewsBanner: false,
-    hideSignatureImages: false,
-  });
+  const storage = ref<{ [key: string]: any }>({});
 
   chrome.storage.sync.get((items) => {
     storage.value = items;

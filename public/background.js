@@ -67,9 +67,9 @@ chrome.runtime.onInstalled.addListener(async () => {
   const existing = await chrome.storage.sync.get();
   const factory = {
     fixedNavigationIcons: false,
-    postImageHeightLimit: 0,
+    postImageHeightLimit: false,
     replaceLogo: "",
-    limitPageWidth: 0,
+    limitPageWidth: false,
     hideForumNewsBanner: false,
     hideSignatureImages: false,
   };
@@ -78,6 +78,13 @@ chrome.runtime.onInstalled.addListener(async () => {
     ...factory,
     ...existing,
   });
+
+  // Remove existing keys that are no longer in use.
+  const factoryKeys = Object.keys(factory);
+  const obsoleteKeys = Object.keys(existing).filter(
+    (x) => !factoryKeys.includes(x)
+  );
+  chrome.storage.sync.remove(obsoleteKeys);
 });
 
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {

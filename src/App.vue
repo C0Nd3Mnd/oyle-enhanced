@@ -107,7 +107,7 @@ function easterEgg() {
       <v-btn @click="reload">Neu laden</v-btn>
     </v-app-bar>
     <v-main>
-      <v-list lines="two" select-strategy="independent" density="compact">
+      <v-list select-strategy="independent" density="compact">
         <v-list-subheader>Allgemein</v-list-subheader>
         <v-list-item>
           <v-select
@@ -126,7 +126,7 @@ function easterEgg() {
             @update:modelValue="setPropString('postImageHeightLimit', $event)"
           />
         </v-list-item>
-        <v-list-item @click="toggleProp('hideSignatureImages')">
+        <v-list-item lines="two" @click="toggleProp('hideSignatureImages')">
           <template #prepend>
             <v-list-item-action start>
               <v-checkbox-btn :model-value="storage.hideSignatureImages" />
@@ -138,7 +138,7 @@ function easterEgg() {
           </v-list-item-subtitle>
         </v-list-item>
         <v-list-subheader>Navigation</v-list-subheader>
-        <v-list-item @click="toggleProp('fixedNavigationIcons')">
+        <v-list-item lines="three" @click="toggleProp('fixedNavigationIcons')">
           <template #prepend>
             <v-list-item-action start>
               <v-checkbox-btn :model-value="storage.fixedNavigationIcons" />

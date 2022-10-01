@@ -92,7 +92,12 @@ const addonStore = useAddonStore();
     <v-app-bar color="primary" density="compact">
       <v-app-bar-nav-icon :icon="easterEggIcon" @click="easterEgg" />
       <v-app-bar-title>Oyle Enhanced</v-app-bar-title>
-      <v-btn @click="reload">Neu laden</v-btn>
+      <v-btn @click="reload">
+        Neu laden
+        <v-tooltip activator="parent" location="bottom">
+          Lädt alle im Browser geöffneten oyle-community.de Tabs neu.
+        </v-tooltip>
+      </v-btn>
     </v-app-bar>
     <v-main>
       <v-list select-strategy="independent" density="compact">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { version } from "../package.json";
-import { mdiOwl, mdiCat, mdiBird, mdiGithub } from "@mdi/js";
+import { mdiOwl, mdiCat, mdiBird, mdiSleep, mdiGithub } from "@mdi/js";
 import FeatureToggle from "./components/FeatureToggle.vue";
 import { useAddonStore } from "./stores/addon";
 
@@ -70,12 +70,15 @@ const easterEggIcon = ref(mdiOwl);
 function easterEgg() {
   switch (easterEggIcon.value) {
     case mdiOwl:
-      easterEggIcon.value = mdiCat;
+      easterEggIcon.value = mdiSleep;
       break;
-    case mdiCat:
+    case mdiSleep:
       easterEggIcon.value = mdiBird;
       break;
     case mdiBird:
+      easterEggIcon.value = mdiCat;
+      break;
+    case mdiCat:
       easterEggIcon.value = mdiOwl;
       break;
   }

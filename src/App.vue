@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { version } from "../package.json";
 import { mdiOwl, mdiCat, mdiBird, mdiGithub } from "@mdi/js";
+import FeatureToggle from "./components/FeatureToggle.vue";
 
 const postImageHeightLimitOptions = [
   {
@@ -126,30 +127,19 @@ function easterEgg() {
             @update:modelValue="setPropString('postImageHeightLimit', $event)"
           />
         </v-list-item>
-        <v-list-item lines="two" @click="toggleProp('hideSignatureImages')">
-          <template #prepend>
-            <v-list-item-action start>
-              <v-checkbox-btn :model-value="storage.hideSignatureImages" />
-            </v-list-item-action>
-          </template>
-          <v-list-item-title>Signaturbilder ausblenden</v-list-item-title>
-          <v-list-item-subtitle>
-            Blendet sämtliche Bilder in Signaturen von Posts aus.
-          </v-list-item-subtitle>
-        </v-list-item>
+        <FeatureToggle
+          prop="hideSignatureImages"
+          title="Signaturbilder ausblenden"
+          subtitle="Blendet sämtliche Bilder in Signaturen von Posts aus."
+          lines="two"
+        />
         <v-list-subheader>Navigation</v-list-subheader>
-        <v-list-item lines="three" @click="toggleProp('fixedNavigationIcons')">
-          <template #prepend>
-            <v-list-item-action start>
-              <v-checkbox-btn :model-value="storage.fixedNavigationIcons" />
-            </v-list-item-action>
-          </template>
-          <v-list-item-title>Breite der Icons gleichsetzen</v-list-item-title>
-          <v-list-item-subtitle>
-            Setzt die Breite aller Icons auf den gleichen Wert, um gleichmäßige
-            Abstände zu erzeugen.
-          </v-list-item-subtitle>
-        </v-list-item>
+        <FeatureToggle
+          prop="fixedNavigationIcons"
+          title="Breite der Icons gleichsetzen"
+          subtitle="Setzt die Breite aller Icons auf den gleichen Wert, um gleichmäßige Abstände zu erzeugen."
+          lines="three"
+        />
         <!--        <v-list-subheader>Forenansicht</v-list-subheader>-->
         <!--        <v-list-item @click="toggleProp('hideForumNewsBanner')">-->
         <!--          <template #prepend>-->

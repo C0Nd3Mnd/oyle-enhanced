@@ -102,6 +102,7 @@ const addonStore = useAddonStore();
             :items="limitPageWidthOptions"
             label="Maximale Breite der Seite"
             :model-value="addonStore.storage.limitPageWidth"
+            hide-details
             @update:modelValue="addonStore.setItem('limitPageWidth', $event)"
           />
         </v-list-item>
@@ -111,6 +112,7 @@ const addonStore = useAddonStore();
             :items="postImageHeightLimitOptions"
             label="Maximale Höhe von Bildern"
             :model-value="addonStore.storage.postImageHeightLimit"
+            hide-details
             @update:modelValue="
               addonStore.setItem('postImageHeightLimit', $event)
             "

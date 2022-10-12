@@ -21,17 +21,6 @@ img.bbImage {
 }`;
   }
 
-  if (storage.replaceLogo) {
-    // https://i.imgur.com/otNUb9m.png
-
-    css += `
-/* Replace logo with a crappy one */
-.p-header-logo > a:nth-child(1) > img:nth-child(1) {
-  content: url('${storage.replaceLogo}');
-  max-height: 36px;
-}`;
-  }
-
   if (storage.limitPageWidth) {
     css += `
 /* Max width */
@@ -41,14 +30,6 @@ div.p-sectionLinks-inner,
 div.p-body-inner,
 div.p-footer-inner {
   max-width: ${storage.limitPageWidth};
-}`;
-  }
-
-  if (storage.hideForumNewsBanner) {
-    css += `
-/* Hide forum news banner */
-#top > div.p-body > div > div.p-body-main > div.p-body-content > div > div.block.porta-features.porta-features-fix {
-  display: none;
 }`;
   }
 
@@ -68,9 +49,7 @@ chrome.runtime.onInstalled.addListener(async () => {
   const factory = {
     fixedNavigationIcons: false,
     postImageHeightLimit: false,
-    replaceLogo: "",
     limitPageWidth: false,
-    hideForumNewsBanner: false,
     hideSignatureImages: false,
   };
 
@@ -108,22 +87,4 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
       console.log(`Injected CSS into tab ${tabId}.`, changeInfo, tab);
     }
   );
-
-  // chrome.scripting.removeCSS(
-  //   {
-  //     css: CSS_TEMP,
-  //     target: { tabId },
-  //   },
-  //   () => {
-  //     chrome.scripting.insertCSS(
-  //       {
-  //         css: CSS_TEMP,
-  //         target: { tabId },
-  //       },
-  //       () => {
-  //         console.log("Injected CSS into tab.", tab);
-  //       }
-  //     );
-  //   }
-  // );
 });

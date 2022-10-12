@@ -136,18 +136,6 @@ const addonStore = useAddonStore();
           subtitle="Setzt die Breite aller Icons auf den gleichen Wert, um gleichmäßige Abstände zu erzeugen."
           lines="three"
         />
-        <!--        <v-list-subheader>Forenansicht</v-list-subheader>-->
-        <!--        <v-list-item @click="toggleProp('hideForumNewsBanner')">-->
-        <!--          <template #prepend>-->
-        <!--            <v-list-item-action start>-->
-        <!--              <v-checkbox-btn :model-value="storage.hideForumNewsBanner" />-->
-        <!--            </v-list-item-action>-->
-        <!--          </template>-->
-        <!--          <v-list-item-title>News-Banner ausblenden</v-list-item-title>-->
-        <!--          <v-list-item-subtitle>-->
-        <!--            Blendet den großen News-Banner oben auf der Seite aus.-->
-        <!--          </v-list-item-subtitle>-->
-        <!--        </v-list-item>-->
       </v-list>
       <v-footer app class="pa-0">
         <div class="px-4 py-2 bg-secondary w-100 d-flex">

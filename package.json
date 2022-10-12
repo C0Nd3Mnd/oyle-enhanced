@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build --sourcemap && node postbuild.js",
+    "build-prod": "vue-tsc --noEmit && vite build && node postbuild.js",
     "autobuild": "nodemon -w src -w public -w package.json -w postbuild.js -e js,ts,json,html,vue,css -x \"npm run build\"",
     "preview": "vite preview"
   },
@@ -18,7 +19,6 @@
   "devDependencies": {
     "@types/chrome": "^0.0.197",
     "@vitejs/plugin-vue": "^3.1.0",
-    "chrome": "^0.1.0",
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
     "typescript": "^4.6.4",

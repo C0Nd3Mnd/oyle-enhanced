@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { version } from "../package.json";
-import { mdiOwl, mdiCat, mdiBird, mdiSleep, mdiGithub } from "@mdi/js";
+import {
+  mdiOwl,
+  mdiCat,
+  mdiBird,
+  mdiSleep,
+  mdiGithub,
+  mdiFormatSize,
+  mdiCog,
+  mdiInformation,
+  mdiCardText,
+} from "@mdi/js";
 import FeatureToggle from "./components/FeatureToggle.vue";
 import { useAddonStore } from "./stores/addon";
 
@@ -85,6 +95,8 @@ function easterEgg() {
 }
 
 const addonStore = useAddonStore();
+
+const activeTab = ref("general");
 </script>
 
 <template>
@@ -98,6 +110,33 @@ const addonStore = useAddonStore();
           Lädt alle im Browser geöffneten oyle-community.de Tabs neu.
         </v-tooltip>
       </v-btn>
+
+      <template #extension>
+        <v-tabs v-model="activeTab" grow density="compact">
+          <v-tab value="general">
+            <v-icon>{{ mdiCog }}</v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              Allgemein
+            </v-tooltip>
+          </v-tab>
+          <v-tab value="posts">
+            <v-icon>{{ mdiCardText }}</v-icon>
+            <v-tooltip activator="parent" location="bottom">Posts</v-tooltip>
+          </v-tab>
+          <v-tab value="font">
+            <v-icon>{{ mdiFormatSize }}</v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              Schriftart
+            </v-tooltip>
+          </v-tab>
+          <v-tab value="about">
+            <v-icon>{{ mdiInformation }}</v-icon>
+            <v-tooltip activator="parent" location="bottom">
+              Informationen
+            </v-tooltip>
+          </v-tab>
+        </v-tabs>
+      </template>
     </v-app-bar>
     <v-main>
       <v-list select-strategy="independent" density="compact">

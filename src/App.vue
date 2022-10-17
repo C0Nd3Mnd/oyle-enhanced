@@ -61,6 +61,21 @@ const limitPageWidthOptions = [
   },
 ];
 
+const topicNavigationModeOptions = [
+  {
+    title: "Standard",
+    value: false,
+  },
+  {
+    title: "Einfach",
+    value: "simple",
+  },
+  {
+    title: "Erweitert",
+    value: "advanced",
+  },
+];
+
 async function reload() {
   const tabs = await chrome.tabs.query({
     url: "*://*.oyle-community.de/*",
@@ -175,6 +190,18 @@ const activeTab = ref("general");
           subtitle="Setzt die Breite aller Icons auf den gleichen Wert, um gleichmäßige Abstände zu erzeugen."
           lines="three"
         />
+        <v-list-subheader>Themen</v-list-subheader>
+        <v-list-item>
+          <v-select
+            :items="topicNavigationModeOptions"
+            label="Navigationsmodus"
+            :model-value="addonStore.storage.topicNavigationMode"
+            hide-details
+            @update:modelValue="
+              addonStore.setItem('topicNavigationMode', $event)
+            "
+          />
+        </v-list-item>
       </v-list>
       <v-footer app class="pa-0">
         <div class="px-4 py-2 bg-secondary w-100 d-flex">

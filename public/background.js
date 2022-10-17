@@ -41,6 +41,31 @@ div.p-footer-inner {
 }`;
   }
 
+  switch (storage.topicNavigationMode) {
+    case "simple":
+      css += `
+/* Force display simple nav */
+.pageNavWrapper.pageNavWrapper--mixed .pageNav {
+  display: none;
+}
+
+.pageNavWrapper.pageNavWrapper--mixed .pageNavSimple {
+  display: inline-flex;
+}`;
+      break;
+    case "advanced":
+      css += `
+/* Force display advanced nav */
+.pageNavWrapper.pageNavWrapper--mixed .pageNav {
+  display: block;
+}
+
+.pageNavWrapper.pageNavWrapper--mixed .pageNavSimple {
+  display: none;
+}`;
+      break;
+  }
+
   return css;
 }
 
@@ -51,6 +76,7 @@ chrome.runtime.onInstalled.addListener(async () => {
     postImageHeightLimit: false,
     limitPageWidth: false,
     hideSignatureImages: false,
+    topicNavigationMode: false,
   };
 
   chrome.storage.sync.set({

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { version } from "../package.json";
 import {
   mdiOwl,
@@ -12,54 +12,10 @@ import {
   mdiInformation,
   mdiCardText,
 } from "@mdi/js";
-import FeatureToggle from "./components/FeatureToggle.vue";
 import { useAddonStore } from "./stores/addon";
-
-const postImageHeightLimitOptions = [
-  {
-    title: "Standard",
-    value: false,
-  },
-  {
-    title: "400px",
-    value: "400px",
-  },
-  {
-    title: "600px",
-    value: "600px",
-  },
-  {
-    title: "800px",
-    value: "800px",
-  },
-  {
-    title: "Unbegrenzt",
-    value: "unset",
-  },
-];
-
-const limitPageWidthOptions = [
-  {
-    title: "Standard",
-    value: false,
-  },
-  {
-    title: "1200px",
-    value: "1200px",
-  },
-  {
-    title: "1400px",
-    value: "1400px",
-  },
-  {
-    title: "1600px",
-    value: "1600px",
-  },
-  {
-    title: "Unbegrenzt",
-    value: "unset",
-  },
-];
+import FeatureToggle from "./components/FeatureToggle.vue";
+import TabGeneral from "./components/TabGeneral.vue";
+import TabPosts from "./components/TabPosts.vue";
 
 const topicNavigationModeOptions = [
   {
@@ -111,7 +67,33 @@ function easterEgg() {
 
 const addonStore = useAddonStore();
 
+const tabs = [
+  {
+    name: "general",
+    label: "Allgemein",
+    icon: mdiCog,
+  },
+  {
+    name: "posts",
+    label: "Posts",
+    icon: mdiCardText,
+  },
+  {
+    name: "font",
+    label: "Schriftart",
+    icon: mdiFormatSize,
+  },
+  {
+    name: "information",
+    label: "Informationen",
+    icon: mdiInformation,
+  },
+];
+
 const activeTab = ref("general");
+const activeTabTitle = computed(
+  () => tabs.find((tab) => tab.name === activeTab.value)?.label
+);
 </script>
 
 <template>
@@ -128,68 +110,28 @@ const activeTab = ref("general");
 
       <template #extension>
         <v-tabs v-model="activeTab" grow density="compact">
-          <v-tab value="general">
-            <v-icon>{{ mdiCog }}</v-icon>
+          <v-tab v-for="tab in tabs" :key="tab.name" :value="tab.name">
+            <v-icon>{{ tab.icon }}</v-icon>
             <v-tooltip activator="parent" location="bottom">
-              Allgemein
-            </v-tooltip>
-          </v-tab>
-          <v-tab value="posts">
-            <v-icon>{{ mdiCardText }}</v-icon>
-            <v-tooltip activator="parent" location="bottom">Posts</v-tooltip>
-          </v-tab>
-          <v-tab value="font">
-            <v-icon>{{ mdiFormatSize }}</v-icon>
-            <v-tooltip activator="parent" location="bottom">
-              Schriftart
-            </v-tooltip>
-          </v-tab>
-          <v-tab value="about">
-            <v-icon>{{ mdiInformation }}</v-icon>
-            <v-tooltip activator="parent" location="bottom">
-              Informationen
+              {{ tab.label }}
             </v-tooltip>
           </v-tab>
         </v-tabs>
       </template>
     </v-app-bar>
     <v-main>
+      <h6 class="text-h6 px-4 pb-0 pt-2">{{ activeTabTitle }}</h6>
+      <v-window v-model="activeTab">
+        <v-window-item value="general">
+          <TabGeneral />
+        </v-window-item>
+        <v-window-item value="posts">
+          <TabPosts />
+        </v-window-item>
+        <v-window-item value="font">Schriftart</v-window-item>
+        <v-window-item value="about">Informationen</v-window-item>
+      </v-window>
       <v-list select-strategy="independent" density="compact">
-        <v-list-subheader>Allgemein</v-list-subheader>
-        <v-list-item>
-          <v-select
-            :items="limitPageWidthOptions"
-            label="Maximale Breite der Seite"
-            :model-value="addonStore.storage.limitPageWidth"
-            hide-details
-            @update:modelValue="addonStore.setItem('limitPageWidth', $event)"
-          />
-        </v-list-item>
-        <v-list-subheader>Posts</v-list-subheader>
-        <v-list-item>
-          <v-select
-            :items="postImageHeightLimitOptions"
-            label="Maximale Höhe von Bildern"
-            :model-value="addonStore.storage.postImageHeightLimit"
-            hide-details
-            @update:modelValue="
-              addonStore.setItem('postImageHeightLimit', $event)
-            "
-          />
-        </v-list-item>
-        <FeatureToggle
-          prop="hideSignatureImages"
-          title="Signaturbilder ausblenden"
-          subtitle="Blendet sämtliche Bilder in Signaturen von Posts aus."
-          lines="two"
-        />
-        <v-list-subheader>Navigation</v-list-subheader>
-        <FeatureToggle
-          prop="fixedNavigationIcons"
-          title="Breite der Icons gleichsetzen"
-          subtitle="Setzt die Breite aller Icons auf den gleichen Wert, um gleichmäßige Abstände zu erzeugen."
-          lines="three"
-        />
         <v-list-subheader>Themen</v-list-subheader>
         <v-list-item>
           <v-select
